@@ -45,6 +45,7 @@ new Vue({
 
     currentRelease: null,
     latestRelease: null,
+    isDark: null,
 
     chartOptions: {
       chart: {
@@ -243,6 +244,16 @@ new Vue({
         .catch(err => alert(err.message || err.toString()))
         .finally(() => this.refresh().catch(console.error));
     },
+    toggleTheme() {
+      if (this.isDark) {
+        localStorage.theme = "light";
+        document.documentElement.classList.remove('dark');
+      } else {
+        localStorage.theme = "dark";
+        document.documentElement.classList.add('dark');
+      }
+      this.isDark = !this.isDark;
+    },
     onSortationChange() {
       this.clients.sort((a, b) => {
         const nameA = a[this.sortation].toUpperCase(); // ignore upper and lowercase
@@ -266,6 +277,10 @@ new Vue({
     },
   },
   mounted() {
+    this.isDark = false;
+    if (localStorage.theme === 'dark') {
+      this.isDark = true;
+    }
     this.api = new API();
     this.api.getSession()
       .then(session => {
