@@ -248,7 +248,7 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
         });
 
         if (!client) {
-          address = `${WG_DEFAULT_ADDRESS.replace('x', i)}/32`;
+          address = `${WG_DEFAULT_ADDRESS.replace('x', i)}`;
           break;
         }
       }
