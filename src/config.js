@@ -21,7 +21,7 @@ module.exports.WG_PRE_UP = process.env.WG_PRE_UP || '';
 module.exports.WG_POST_UP = process.env.WG_POST_UP || `
 iptables -t mangle -A PREROUTING -i wg0 -j MARK --set-mark 0x30;
 iptables -t nat -A POSTROUTING ! -o wg0 -m mark --mark 0x30 -j MASQUERADE;
-iptables -A INPUT -p udp -m udp --dport 51820 -j ACCEPT;
+iptables -A INPUT -p udp -m udp --dport ${module.exports.WG_PORT} -j ACCEPT;
 iptables -A FORWARD -i wg0 -j ACCEPT;
 iptables -A FORWARD -o wg0 -j ACCEPT;
 `.split('\n').join(' ');
